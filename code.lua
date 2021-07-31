@@ -1,4 +1,3 @@
--- ignore this comment
 stuff = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
 stage = 0
 UIS = game:GetService("UserInputService")
@@ -162,7 +161,6 @@ function createmakebutton(name,color,pos,image,cfunc,dfunc)
     outline.TextWrapped = true
     outline.TextScaled = true
     outline.Parent = label
-    
     local ImageLabel = Instance.new("ImageLabel",button)
     ImageLabel.AnchorPoint = Vector2.new(0.5, 0.5)
     ImageLabel.Size = UDim2.new(0.8, 0, 0.8, 0)
@@ -239,6 +237,7 @@ poke.tx.tx.tx.Value = "Also, if you disable protect important objects you have a
 ftxt = Instance.new("StringValue", poke.tx.tx.tx)
 ftxt.Value = "Oh yeah almost forgot if you press X or C when the box is selected with move/scale/rotate etc, just deselect it."
 ftxt.Name = "tx"
+print("Ran successfully! Warp to hub and talk to sheldon/poké and they'll give advice about this mod/exploit")
 while true do
     if stage == 2 then
         if UIS:IsKeyDown(Enum.KeyCode.X) then
