@@ -232,7 +232,7 @@ sign.tx.tx.tx.tx.Value = "How about if I open two boxes"
 sign.tx.tx.tx.tx.tx.Value = "I'm pretty sure it deletes objects and stuff, so don't."
 sign.tx.tx.tx.tx.tx.tx.Value = 'But I thought you said "' .. "I'm " .. 'not your momma, you do what you want."'
 
-poke = game:GetService("ReplicatedFirst").maps.hub["PokÃ©"]
+poke = game:GetService("ReplicatedFirst").maps.hub["Poké"]
 poke.tx.Value = "Keep in mind this mod/exploit is fairly fragile, so if you're using this to make levels always keep a backup."
 poke.tx.tx.Value = "I would not recommend deleting the box, as I havent tested that yet, but if you do, press X."
 poke.tx.tx.tx.Value = "Also, if you disable protect important objects you have a chance of softlocking."
