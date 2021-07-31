@@ -21,7 +21,7 @@ Mouse.Button1Down:Connect(function(input)
         if stage == 2 then
             _G.par = Instance.new("Folder",game.workspace.MAKE.place)
             for i,v in ipairs(box:GetTouchingParts()) do
-                -- once al the objects are in _G.par, they can't be selected, making the move tool that it defaults to useless
+                -- once all the objects are in _G.par, they can't be selected, making the move tool that it defaults to useless
                 if (v.Name ~= "grid" and v.Name ~= "char") or not protval then
                     v.Parent = _G.par
                     diff = Instance.new("Vector3Value",v)
@@ -183,6 +183,7 @@ function createmakebutton(name,color,pos,image,cfunc,dfunc)
     
     
 end
+-- If your wondering about why so many functions, I actually make the functions seperately from this project, and I just reused it here
 function test()
 if  cframeval.Value then
     cframeval.Value = false
