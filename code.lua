@@ -1,3 +1,4 @@
+-- ignore this comment
 stuff = getsenv(game.Players.LocalPlayer.PlayerScripts.CharacterScript)
 stage = 0
 UIS = game:GetService("UserInputService")
