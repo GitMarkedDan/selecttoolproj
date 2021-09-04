@@ -20,9 +20,10 @@ Mouse.Button1Down:Connect(function(input)
         stage = stage + 1
         if stage == 2 then
             _G.par = Instance.new("Folder",game.workspace.MAKE.place)
-            for i,v in ipairs(box:GetTouchingParts()) do
+            ignorelist = {workspace.char,workspace.MAKE.arrow,workspace.MAKE.sel,workspace.MAKE.grid,workspace.MAKE.kill}
+            for i,v in ipairs(game.Workspace:FindPartsInRegion3WithIgnoreList(Region3.new(box.Position - box.Size * 0.5,box.Position + box.Size * 0.5),ignorelist,math.huge)) do
                 -- once all the objects are in _G.par, they can't be selected, making the move tool that it defaults to useless
-                if (v.Name ~= "grid" and v.Name ~= "char") or not protval then
+                if v:IsDescendantOf(workspace.MAKE) then
                     v.Parent = _G.par
                     diff = Instance.new("Vector3Value",v)
                     diff.Name = "diff"
@@ -295,6 +296,5 @@ while true do
     end
     wait(0.00000000001)
 end
-
 -- Hey 3dg your probably reading this hi
 -- I added in some comments to make this easier to read
