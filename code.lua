@@ -7,7 +7,7 @@ Player = game.Players.LocalPlayer
 Mouse = Player:GetMouse()
 
 function createButton(name,position,text,func,parent)
-    parent = parent or game.Players.LocalPlayer.PlayerGui.UI.pause.bg.pause
+    parent = parent or Player.PlayerGui.UI.pause.bg.pause
     unloop = false
     Button = Instance.new("TextButton")
     Button.Font = Enum.Font.SourceSansBold
@@ -42,7 +42,7 @@ function createButton(name,position,text,func,parent)
 end
 
 function createmakebutton(name,color,pos,image,cfunc,dfunc)
-    button = Instance.new("ImageButton",game:GetService("Players").Epicminecrafte.PlayerGui.UI.MAKE)
+    button = Instance.new("ImageButton",Player.PlayerGui.UI.MAKE)
     button.BackgroundTransparency = 1
     button.Image = "rbxassetid://1555990934"
     button.Size = UDim2.new(1, 0, 1, 0)
