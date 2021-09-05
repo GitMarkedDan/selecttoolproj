@@ -6,83 +6,8 @@ lastpos = Vector3.new(0,0,0)
 Player = game.Players.LocalPlayer
 Mouse = Player:GetMouse()
 
---declaration of vars for upcoming funcs
-box = nil
-doing = nil
-once = false
-pos = nil
-cframe = nil
-scaleval = nil
-protval = nil
-
-Mouse.Button1Down:Connect(function(input)
-    if stuff.make.mode == "select" then
-        stage = stage + 1
-        if stage == 2 then
-            _G.par = Instance.new("Folder",game.workspace.MAKE.place)
-            ignorelist = {workspace.char,workspace.MAKE.arrow,workspace.MAKE.sel,workspace.MAKE.grid,workspace.MAKE.kill}
-            for i,v in ipairs(game.Workspace:FindPartsInRegion3WithIgnoreList(Region3.new(box.Position - box.Size * 0.5,box.Position + box.Size * 0.5),ignorelist,math.huge)) do
-                -- once all the objects are in _G.par, they can't be selected, making the move tool that it defaults to useless
-                if v:IsDescendantOf(workspace.MAKE) then
-                    v.Parent = _G.par
-                    diff = Instance.new("Vector3Value",v)
-                    diff.Name = "diff"
-                    diff.Value = box.Position - v.Position
-                    rotdiff = Instance.new("Vector3Value",v)
-                    rotdiff.Name = "rotdiff"
-                    rotdiff.Value = box.Orientation - v.Orientation
-                    scalediff = Instance.new("Vector3Value",v)
-                    scalediff.Name = "scalediff"
-                    scalediff.Value = v.Size / box.Size
-                    cframediff = Instance.new("CFrameValue",v)
-                    cframediff.Name = "cframediff"
-                    cframediff.Value = box.CFrame:ToObjectSpace(v.CFrame)
-                end
-            end
-            _G.par.Name = "grouped"
-            -- ^^ that variable is a global variable cuz i was too lazy to change it
-            box.Parent = game.workspace.MAKE.place
-        elseif stage == 1 then
-            box = Instance.new("Part",game.workspace)
-            box.Name = "P2"
-            box.BottomSurface = Enum.SurfaceType.Smooth
-            box.TopSurface = Enum.SurfaceType.Smooth
-            box.Transparency = 1
-            box.Color = Color3.fromRGB(172, 0, 143)
-            box.Material = Enum.Material.SmoothPlastic
-            box.Size = Vector3.new(0,0,0)
-            box.Position = game.workspace.MAKE.arrow.Position
-            box.Anchored = true
-        
-            SelectionBox = Instance.new("SelectionBox", box)
-            SelectionBox.Color3 = Color3.fromRGB(172, 0, 143)
-            SelectionBox.SurfaceColor3 = Color3.fromRGB(13, 105, 172)
-            SelectionBox.Adornee = box
-            SelectionBox.LineThickness = 0.15
-            SelectionBox.Transparency = 1
-            doing = true
-        end
-    end
-end)
-
-other = Instance.new("Folder",game:GetService("ReplicatedFirst").maps.MAKE)
-other.Name = "placeb"
-
-UIS.InputBegan:Connect(function(input)
-if input.KeyCode == Enum.KeyCode.Z then
-for i,v in ipairs(_G.par:GetChildren()) do
-    clone = v:Clone()
-    clone.Parent = game.workspace.MAKE.place
-    clone.diff:Destroy()
-    clone.rotdiff:Destroy()
-    clone.scalediff:Destroy()
-    clone.cframediff:Destroy()
-end
-end
-end)
-
 function createButton(name,position,text,func,parent)
-    parent = parent or game.Players.LocalPlayer.PlayerGui.UI.pause.bg.pause
+    parent = parent or Player.PlayerGui.UI.pause.bg.pause
     unloop = false
     Button = Instance.new("TextButton")
     Button.Font = Enum.Font.SourceSansBold
@@ -117,7 +42,7 @@ function createButton(name,position,text,func,parent)
 end
 
 function createmakebutton(name,color,pos,image,cfunc,dfunc)
-    button = Instance.new("ImageButton",game:GetService("Players").Epicminecrafte.PlayerGui.UI.MAKE)
+    button = Instance.new("ImageButton",Player.PlayerGui.UI.MAKE)
     button.BackgroundTransparency = 1
     button.Image = "rbxassetid://1555990934"
     button.Size = UDim2.new(1, 0, 1, 0)
@@ -178,49 +103,82 @@ function createmakebutton(name,color,pos,image,cfunc,dfunc)
         for i,v in ipairs(game.workspace.MAKE.place:GetChildren()) do
             v.Parent = game.workspace.MAKE.placeb
         end
-        doing = true
     end)
-    
-    
 end
+
+other = Instance.new("Folder",game:GetService("ReplicatedFirst").maps.MAKE)
+other.Name = "placeb"
+
+UIS.InputBegan:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.Z then
+        for i,v in ipairs(par:GetChildren()) do
+            clone = v:Clone()
+            clone.Parent = game.workspace.MAKE.place
+            clone.diff:Destroy()
+            clone.rotdiff:Destroy()
+            clone.scalediff:Destroy()
+            clone.cframediff:Destroy()
+        end
+    end
+end)
 -- If your wondering about why so many functions, I actually make the functions seperately from this project, and I just reused it here
 function test()
-if  cframeval.Value then
-    cframeval.Value = false
-    Player.PlayerGui.UI.pause.bg3.pause.cframe.TextColor3 = Color3.fromRGB(255,0,0)
-else
-    cframeval.Value = true
-    Player.PlayerGui.UI.pause.bg3.pause.cframe.TextColor3 = Color3.fromRGB(0,255,0)
+    if cframeval.Value then
+        cframeval.Value = false
+        Player.PlayerGui.UI.pause.bg3.pause.cframe.TextColor3 = Color3.fromRGB(255,0,0)
+    else
+        cframeval.Value = true
+        Player.PlayerGui.UI.pause.bg3.pause.cframe.TextColor3 = Color3.fromRGB(0,255,0)
+    end
 end
-end
+
 function test2()
-if  scaleval.Value then
-    scaleval.Value = false
-    Player.PlayerGui.UI.pause.bg3.pause.scale.TextColor3 = Color3.fromRGB(255,0,0)
-else
-    scaleval.Value = true
-    Player.PlayerGui.UI.pause.bg3.pause.scale.TextColor3 = Color3.fromRGB(0,255,0)
+    if scaleval.Value then
+        scaleval.Value = false
+        Player.PlayerGui.UI.pause.bg3.pause.scale.TextColor3 = Color3.fromRGB(255,0,0)
+    else
+        scaleval.Value = true
+        Player.PlayerGui.UI.pause.bg3.pause.scale.TextColor3 = Color3.fromRGB(0,255,0)
+    end
 end
-end
+
 function test3()
-if  protval.Value then
-    protval.Value = false
-    Player.PlayerGui.UI.pause.bg3.pause.prot.TextColor3 = Color3.fromRGB(255,0,0)
-else
-    protval.Value = true
-    Player.PlayerGui.UI.pause.bg3.pause.prot.TextColor3 = Color3.fromRGB(0,255,0)
+    if lockval.Value then
+        lockval.Value = false
+        Player.PlayerGui.UI.pause.bg3.pause.lock.TextColor3 = Color3.fromRGB(255,0,0)
+    else
+        lockval.Value = true
+        Player.PlayerGui.UI.pause.bg3.pause.lock.TextColor3 = Color3.fromRGB(0,255,0)
+    end
 end
+
+function test4()
+    if relscale.Value then
+        relscale.Value = false
+        Player.PlayerGui.UI.pause.bg3.pause.rel.TextColor3 = Color3.fromRGB(255,0,0)
+    else
+        relscale.Value = true
+        Player.PlayerGui.UI.pause.bg3.pause.rel.TextColor3 = Color3.fromRGB(0,255,0)
+    end
 end
+
 createButton("cframe", UDim2.new(0.75,0,0,0),"Rotating box changes object position",test,Player.PlayerGui.UI.pause.bg3.pause)
 createButton("scale", UDim2.new(0.1,0,0,0),"Scaling box changes object size",test2,Player.PlayerGui.UI.pause.bg3.pause)
-protbut = createButton("prot",UDim2.new(0.4,0,-0.1,0),"Protect important objects",test3,Player.PlayerGui.UI.pause.bg3.pause)
-protbut.TextColor3 = Color3.new(0,255,0)
-protval = Instance.new("BoolValue", Player.PlayerGui.UI.pause.bg3.pause.prot)
+lockbut = createButton("lock",UDim2.new(0.4,0,-0.1,0),"unlock position of objects",test3,Player.PlayerGui.UI.pause.bg3.pause)
+createButton("rel",UDim2.new(-0.1,0,-0.1,0),"Scaling is relative",test4,Player.PlayerGui.UI.pause.bg3.pause)
+
+lockbut.TextColor3 = Color3.new(0,255,0)
+
+lockval = Instance.new("BoolValue", Player.PlayerGui.UI.pause.bg3.pause.lock)
 cframeval = Instance.new("BoolValue", Player.PlayerGui.UI.pause.bg3.pause.cframe)
 scaleval = Instance.new("BoolValue", Player.PlayerGui.UI.pause.bg3.pause.scale)
+relscale = Instance.new("BoolValue", Player.PlayerGui.UI.pause.bg3.pause.rel)
+
 cframeval.Value = false
 scaleval.Value = false
-protval.Value = true
+lockval.Value = true
+relscale.Value = false
+
 createmakebutton("select",Color3.new(150,255,0),UDim2.new(1.2,0,0,0),"rbxassetid://1556129878")
 
 sign = game:GetService("ReplicatedFirst").maps.hub["Sheldon Sign"]
@@ -238,63 +196,141 @@ poke.tx.tx.tx.Value = "Also, if you disable protect important objects you have a
 ftxt = Instance.new("StringValue", poke.tx.tx.tx)
 ftxt.Value = "Oh yeah almost forgot if you press X or C when the box is selected with move/scale/rotate etc, just deselect it."
 ftxt.Name = "tx"
-print("Ran successfully! Warp to hub and talk to sheldon/poké and they'll give advice about this mod/exploit")
-while true do
-    if stage == 2 then
-        if UIS:IsKeyDown(Enum.KeyCode.X) then
+
+Mouse.Button1Down:Connect(function(input)
+    if stuff.make.mode == "select" then
+        stage = stage + 1
+        if stage == 2 then
+            par = Instance.new("Folder",game.workspace.MAKE.place)
+            ignorelist = {workspace.char,workspace.MAKE.arrow,workspace.MAKE.sel,workspace.MAKE.grid,workspace.MAKE.kill}
+            for i,v in ipairs(game.Workspace:FindPartsInRegion3WithIgnoreList(Region3.new(box.Position - box.Size * 0.5,box.Position + box.Size * 0.5),ignorelist,math.huge)) do
+                -- once all the objects are in par, they can't be selected, making the move tool that it defaults to useless
+                if v.Parent == workspace.MAKE.placeb  then
+                    --  :IsDescendantOf(workspace.MAKE)
+                    v.Parent = par
+                    diff = Instance.new("Vector3Value",v)
+                    diff.Name = "diff"
+                    diff.Value = box.Position - v.Position
+                    rotdiff = Instance.new("Vector3Value",v)
+                    rotdiff.Name = "rotdiff"
+                    rotdiff.Value = box.Orientation - v.Orientation
+                    relscalediff = Instance.new("Vector3Value",v)
+                    relscalediff.Name = "relscalediff"
+                    relscalediff.Value = v.Size / box.Size
+                    scalediff = Instance.new("Vector3Value",v)
+                    scalediff.Name = "scalediff"
+                    scalediff.Value = v.Size - box.Size
+                    cframediff = Instance.new("CFrameValue",v)
+                    cframediff.Name = "cframediff"
+                    cframediff.Value = box.CFrame:ToObjectSpace(v.CFrame)
+                end
+            end
+            par.Name = "grouped"
+            -- ^^ that variable is a global variable cuz i was too lazy to change it
+            box.Parent = game.workspace.MAKE.place
+        elseif stage == 1 then
+            box = Instance.new("Part",game.workspace)
+            box.Name = "P2"
+            box.BottomSurface = Enum.SurfaceType.Smooth
+            box.TopSurface = Enum.SurfaceType.Smooth
+            box.Transparency = 1
+            box.Color = Color3.fromRGB(172, 0, 143)
+            box.Material = Enum.Material.SmoothPlastic
+            box.Size = Vector3.new(0,0,0)
+            box.Position = game.workspace.MAKE.arrow.Position
+            box.Anchored = true
+        
+            SelectionBox = Instance.new("SelectionBox", box)
+            SelectionBox.Color3 = Color3.fromRGB(172, 0, 143)
+            SelectionBox.SurfaceColor3 = Color3.fromRGB(13, 105, 172)
+            SelectionBox.Adornee = box
+            SelectionBox.LineThickness = 0.15
+            SelectionBox.Transparency = 1
+        else
             box:Destroy()
             SelectionBox:Destroy()
-            for i,v in ipairs(_G.par:GetChildren()) do
-                v.Parent = game.workspace.MAKE.place
+            for i,v in ipairs(par:GetChildren()) do
+                v.Parent = game.workspace.MAKE.placeb
                 v.diff:Destroy()
                 v.rotdiff:Destroy()
+                v.relscalediff:Destroy()
                 v.scalediff:Destroy()
                 v.cframediff:Destroy()
             end
-            _G.par:Destroy()
+            par:Destroy()
             stage = 0
-        elseif UIS:IsKeyDown(Enum.KeyCode.C) then
-            box:Destroy()
-            SelectionBox:Destroy()
-            for i,v in ipairs(_G.par:GetChildren()) do
-                v:ClearAllChildren()
-                v:Destroy()
-            end
-            _G.par:Destroy()
-            stage = 0
-        else
-            for i,v in ipairs(_G.par:GetChildren()) do
-                if cframeval.Value then
-                    v.CFrame = box.CFrame:ToWorldSpace(v.cframediff.Value)
-                else
-                    v.Position = box.Position - v.diff.Value
-                    v.Orientation = box.Orientation + v.rotdiff.Value
-                end
-                if scaleval.Value then
-                    v.Size = box.Size * v.scalediff.Value
-                end
-            end
         end
-    elseif stuff.make.mode == "select" then
-        truepos = game.workspace.MAKE.arrow.Position - Vector3.new(0,3,0)
-        if stage == 1 then
-            SelectionBox.Transparency = 0
-            box.Transparency = 0.6
-            size = pos - truepos
-            box.Size = Vector3.new(math.abs(size.X),math.abs(size.Y),math.abs(size.Z))
-            box.Position = (pos + truepos)/2
-        else
-            pos = truepos
-        end
-    elseif doing then
-        for i,v in ipairs(game.workspace.MAKE.placeb:GetChildren()) do
-            v.Parent = game.workspace.MAKE.place
-        end
-        _G.par:Destroy()
-        stage = 0
-        doing = false
     end
-    wait(0.00000000001)
+end)
+
+print("Ran successfully! Warp to hub and talk to sheldon/poké and they'll give advice about this mod/exploit")
+while true do
+    if stuff.map.Name == "MAKE" then
+        if stage == 2 then
+            --allows for X and C keybind when box is active
+            if UIS:IsKeyDown(Enum.KeyCode.X) then
+                box:Destroy()
+                SelectionBox:Destroy()
+                for i,v in ipairs(par:GetChildren()) do
+                    v.Parent = game.workspace.MAKE.place
+                    v.diff:Destroy()
+                    v.rotdiff:Destroy()
+                    v.relscalediff:Destroy()
+                    v.scalediff:Destroy()
+                    v.cframediff:Destroy()
+                end
+                par:Destroy()
+                stage = 0
+            elseif UIS:IsKeyDown(Enum.KeyCode.C) then
+                box:Destroy()
+                SelectionBox:Destroy()
+                for i,v in ipairs(par:GetChildren()) do
+                    v:ClearAllChildren()
+                    v:Destroy()
+                end
+                par:Destroy()
+                stage = 0
+            else
+                --does box transformations
+                for i,v in ipairs(par:GetChildren()) do
+                    if lockval.Value then 
+                        if cframeval.Value then
+                            v.CFrame = box.CFrame:ToWorldSpace(v.cframediff.Value)
+                        else
+                            v.Position = box.Position - v.diff.Value
+                            v.Orientation = box.Orientation + v.rotdiff.Value
+                        end
+                    end
+                    if scaleval.Value then
+                        if relscale.Value then
+                            v.Size = box.Size * v.relscalediff.Value
+                        else
+                            v.Size = box.Size + v.scalediff.Value
+                        end
+                    end
+                end
+            end
+        end
+        if stuff.make.mode == "select" and stage ~= 2 then
+            --box selection code
+            truepos = game.workspace.MAKE.arrow.Position - Vector3.new(0,3,0)
+            if stage == 1 then
+                -- when user clicked once, resize box based on pos
+                SelectionBox.Transparency = 0
+                box.Transparency = 0.6
+                size = pos - truepos
+                box.Size = Vector3.new(math.abs(size.X),math.abs(size.Y),math.abs(size.Z))
+                box.Position = (pos + truepos)/2
+            else
+                pos = truepos
+            end
+        elseif stuff.make.mode ~= nil and next(game.workspace.MAKE.placeb:GetChildren()) ~= nil then
+            for i,v in ipairs(game.workspace.MAKE.placeb:GetChildren()) do
+                v.Parent = game.workspace.MAKE.place
+            end
+        end
+    end
+    wait()
 end
 -- Hey 3dg your probably reading this hi
 -- I added in some comments to make this easier to read
