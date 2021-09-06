@@ -515,47 +515,6 @@ UIS.InputBegan:Connect(function(input)
     end
 end)
 
--- If your wondering about why so many functions, I actually make the functions seperately from this project, and I just reused it here
-function test()
-    if cframeval.Value then
-        cframeval.Value = false
-        Player.PlayerGui.UI.pause.bg3.pause.cframe.TextColor3 = Color3.fromRGB(255,0,0)
-    else
-        cframeval.Value = true
-        Player.PlayerGui.UI.pause.bg3.pause.cframe.TextColor3 = Color3.fromRGB(0,255,0)
-    end
-end
-
-function test2()
-    if scaleval.Value then
-        scaleval.Value = false
-        Player.PlayerGui.UI.pause.bg3.pause.scale.TextColor3 = Color3.fromRGB(255,0,0)
-    else
-        scaleval.Value = true
-        Player.PlayerGui.UI.pause.bg3.pause.scale.TextColor3 = Color3.fromRGB(0,255,0)
-    end
-end
-
-function test3()
-    if lockval.Value then
-        lockval.Value = false
-        Player.PlayerGui.UI.pause.bg3.pause.lock.TextColor3 = Color3.fromRGB(255,0,0)
-    else
-        lockval.Value = true
-        Player.PlayerGui.UI.pause.bg3.pause.lock.TextColor3 = Color3.fromRGB(0,255,0)
-    end
-end
-
-function test4()
-    if relscale.Value then
-        relscale.Value = false
-        Player.PlayerGui.UI.pause.bg3.pause.rel.TextColor3 = Color3.fromRGB(255,0,0)
-    else
-        relscale.Value = true
-        Player.PlayerGui.UI.pause.bg3.pause.rel.TextColor3 = Color3.fromRGB(0,255,0)
-    end
-end
-
 createmakebutton("select",Color3.new(150,255,0),UDim2.new(1.2,0,0,0),"rbxassetid://7409871696")
 
 sign = game:GetService("ReplicatedFirst").maps.hub["Sheldon Sign"]
